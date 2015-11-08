@@ -30,6 +30,14 @@ public class DetailActivity extends Activity implements View.OnClickListener {
 
     public static final String EXTRA_PARAM_ID = "place_id";
     public static final float ANIMATE_APLHA_VALUE = 1.0f;
+    public static final int X_OFFSET = 30;
+    public static final int Y_OFFSET = 60;
+    public static final int ALPHA_ANIM_DURATION_MILLIS = 100;
+    public static final float FROM_ALPHA = 1.0f;
+    public static final float TO_ALPHA = 0.0f;
+    public static final int SOFT_INPUT_FLAG = 0;
+    public static final int START_RADIUS = 0;
+    public static final int END_RADIUS = 0;
     int defaultColor;
     private ListView mList;
     private ImageView mImageView;
@@ -123,7 +131,7 @@ public class DetailActivity extends Activity implements View.OnClickListener {
                 } else {
                     addToDo(mEditTextTodo.getText().toString());
                     mToDoAdapter.notifyDataSetChanged();
-                    mInputManager.hideSoftInputFromWindow(mEditTextTodo.getWindowToken(), 0);
+                    mInputManager.hideSoftInputFromWindow(mEditTextTodo.getWindowToken(), SOFT_INPUT_FLAG);
                     hideEditText(mRevealView);
                     mAddButton.setImageResource(R.drawable.icn_morph_reverse);
                     mAnimatable = (Animatable) (mAddButton).getDrawable();
@@ -133,20 +141,20 @@ public class DetailActivity extends Activity implements View.OnClickListener {
     }
 
     private void revealEditText(LinearLayout view) {
-        int cx = view.getRight() - 30;
-        int cy = view.getBottom() - 60;
+        int cx = view.getRight() - X_OFFSET;
+        int cy = view.getBottom() - Y_OFFSET;
         int finalRadius = Math.max(view.getWidth(), view.getHeight());
-        Animator anim = ViewAnimationUtils.createCircularReveal(view, cx, cy, 0, finalRadius);
+        Animator anim = ViewAnimationUtils.createCircularReveal(view, cx, cy, START_RADIUS, finalRadius);
         view.setVisibility(View.VISIBLE);
         isEditTextVisible = true;
         anim.start();
     }
 
     private void hideEditText(final LinearLayout view) {
-        int cx = view.getRight() - 30;
-        int cy = view.getBottom() - 60;
+        int cx = view.getRight() - X_OFFSET;
+        int cy = view.getBottom() - Y_OFFSET;
         int initialRadius = view.getWidth();
-        Animator anim = ViewAnimationUtils.createCircularReveal(view, cx, cy, initialRadius, 0);
+        Animator anim = ViewAnimationUtils.createCircularReveal(view, cx, cy, initialRadius, END_RADIUS);
         anim.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
@@ -160,8 +168,8 @@ public class DetailActivity extends Activity implements View.OnClickListener {
 
     @Override
     public void onBackPressed() {
-        AlphaAnimation alphaAnimation = new AlphaAnimation(1.0f, 0.0f);
-        alphaAnimation.setDuration(100);
+        AlphaAnimation alphaAnimation = new AlphaAnimation(FROM_ALPHA, TO_ALPHA);
+        alphaAnimation.setDuration(ALPHA_ANIM_DURATION_MILLIS);
         mAddButton.startAnimation(alphaAnimation);
         alphaAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override

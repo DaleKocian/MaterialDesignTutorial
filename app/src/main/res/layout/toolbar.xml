@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Toolbar android:id="@+id/toolbar"
+<Toolbar
+    android:id="@+id/toolbar"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/primary"
     android:minHeight="?android:attr/actionBarSize"
-    android:transitionName="@string/toolbar_transition_name"/>
+    android:transitionName="@string/toolbar_transition_name" />

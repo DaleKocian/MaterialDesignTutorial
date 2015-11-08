@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class PlaceData {
 
+    public static final String REG_EXP_SPACES = "\\s+";
     public static String[] placeNameArray = {"Bora Bora", "Canada", "Dubai", "Hong Kong", "Iceland", "India", "Kenya", "London", "Switzerland", "Sydney"};
 
     public static ArrayList<Place> placeList() {
@@ -11,7 +12,7 @@ public class PlaceData {
         for (int i = 0; i < placeNameArray.length; i++) {
             Place place = new Place();
             place.name = placeNameArray[i];
-            place.imageName = placeNameArray[i].replaceAll("\\s+", "").toLowerCase();
+            place.imageName = placeNameArray[i].replaceAll(REG_EXP_SPACES, "").toLowerCase();
             if (i == 2 || i == 5) {
                 place.isFav = true;
             }

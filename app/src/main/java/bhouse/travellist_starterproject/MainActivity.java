@@ -18,7 +18,11 @@ import android.widget.LinearLayout;
 import android.widget.Toolbar;
 
 public class MainActivity extends Activity {
-    public static final String CLICKED = "Clicked ";
+    public static final String SHOW_AS_LIST = "Show as list";
+    public static final String SHOW_AS_GRID = "Show as grid";
+    public static final int ACTION_BAR_ELEVATION = 7;
+    public static final int GRID_VIEW_SPAN_COUNT = 2;
+    public static final int LIST_VIEW_SPAN_COUNT = 1;
     private RecyclerView mRecyclerView;
     private StaggeredGridLayoutManager mStaggeredLayoutManager;
     private TravelListAdapter mAdapter;
@@ -32,7 +36,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         isListView = true;
         mRecyclerView = (RecyclerView) findViewById(R.id.list);
-        mStaggeredLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
+        mStaggeredLayoutManager = new StaggeredGridLayoutManager(LIST_VIEW_SPAN_COUNT, StaggeredGridLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(mStaggeredLayoutManager);
         mAdapter = new TravelListAdapter(this);
         mRecyclerView.setAdapter(mAdapter);
@@ -70,7 +74,7 @@ public class MainActivity extends Activity {
             if (getActionBar() != null) {
                 getActionBar().setDisplayHomeAsUpEnabled(false);
                 getActionBar().setDisplayShowTitleEnabled(true);
-                getActionBar().setElevation(7);
+                getActionBar().setElevation(ACTION_BAR_ELEVATION);
             }
         }
     }
@@ -97,14 +101,14 @@ public class MainActivity extends Activity {
     private void toggle() {
         MenuItem item = menu.findItem(R.id.action_toggle);
         if (isListView) {
-            mStaggeredLayoutManager.setSpanCount(2);
+            mStaggeredLayoutManager.setSpanCount(GRID_VIEW_SPAN_COUNT);
             item.setIcon(R.drawable.ic_action_list);
-            item.setTitle("Show as list");
+            item.setTitle(SHOW_AS_LIST);
             isListView = false;
         } else {
-            mStaggeredLayoutManager.setSpanCount(1);
+            mStaggeredLayoutManager.setSpanCount(LIST_VIEW_SPAN_COUNT);
             item.setIcon(R.drawable.ic_action_grid);
-            item.setTitle("Show as grid");
+            item.setTitle(SHOW_AS_GRID);
             isListView = true;
         }
     }

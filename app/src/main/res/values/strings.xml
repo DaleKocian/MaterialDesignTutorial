@@ -9,4 +9,5 @@
     <string name="place_image_transition_name">tImage</string>
     <string name="place_name_holder_transition_name">tNameHolder</string>
     <string name="toolbar_transition_name">tActionBar</string>
+    <string name="toggle_title">Show as grid</string>
 </resources>
