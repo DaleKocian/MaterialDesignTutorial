@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Animatable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewAnimationUtils;
@@ -94,15 +95,22 @@ public class DetailActivity extends Activity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_add:
+                Animatable mAnimatable;
                 if (!isEditTextVisible) {
                     revealEditText(mRevealView);
                     mEditTextTodo.requestFocus();
                     mInputManager.showSoftInput(mEditTextTodo, InputMethodManager.SHOW_IMPLICIT);
+                    mAddButton.setImageResource(R.drawable.icn_morph);
+                    mAnimatable = (Animatable) (mAddButton).getDrawable();
+                    mAnimatable.start();
                 } else {
                     addToDo(mEditTextTodo.getText().toString());
                     mToDoAdapter.notifyDataSetChanged();
                     mInputManager.hideSoftInputFromWindow(mEditTextTodo.getWindowToken(), 0);
                     hideEditText(mRevealView);
+                    mAddButton.setImageResource(R.drawable.icn_morph_reverse);
+                    mAnimatable = (Animatable) (mAddButton).getDrawable();
+                    mAnimatable.start();
                 }
         }
     }
