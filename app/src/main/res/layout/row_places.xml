@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView android:id="@+id/placeCard"
+<android.support.v7.widget.CardView
+    android:id="@+id/placeCard"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -9,11 +10,12 @@
     card_view:cardElevation="@dimen/card_elevation">
 
     <ImageView
-        android:contentDescription="@string/place_image_content_desc"
         android:id="@+id/placeImage"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:scaleType="centerCrop" />
+        android:contentDescription="@string/place_image_content_desc"
+        android:scaleType="centerCrop"
+        android:transitionName="@string/place_image_transition_name" />
 
     <!-- Used for the ripple effect on touch -->
     <LinearLayout
@@ -28,7 +30,8 @@
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_gravity="bottom"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:transitionName="@string/place_name_holder_transition_name">
 
         <TextView
             android:id="@+id/placeName"
@@ -36,8 +39,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:gravity="start"
-            android:paddingStart="10dp"
             android:paddingEnd="0dp"
+            android:paddingStart="10dp"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@android:color/white" />
 

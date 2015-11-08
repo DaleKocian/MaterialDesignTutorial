@@ -3,7 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar_detail"/>
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -14,7 +16,7 @@
             android:layout_height="220dp"
             android:contentDescription="@string/place_content_desc"
             android:scaleType="centerCrop"
-            android:transitionName="tImage" />
+            android:transitionName="@string/place_image_transition_name" />
 
         <LinearLayout
             android:id="@+id/llEditTextHolder"
@@ -45,7 +47,7 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:background="@color/primary_dark"
-            android:transitionName="tNameHolder">
+            android:transitionName="@string/place_name_holder_transition_name">
 
             <TextView
                 android:id="@+id/textView"
@@ -66,6 +68,7 @@
             android:layout_gravity="end"
             android:layout_marginEnd="10dp"
             android:layout_marginTop="28dp"
+            android:alpha="0.0"
             android:background="@drawable/btn_background"
             android:contentDescription="@null"
             android:elevation="@dimen/button_elevation"

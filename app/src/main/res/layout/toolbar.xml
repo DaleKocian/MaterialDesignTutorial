@@ -5,4 +5,4 @@
     android:layout_height="wrap_content"
     android:background="@color/primary"
     android:minHeight="?android:attr/actionBarSize"
-    android:transitionName="tActionBar"/>
+    android:transitionName="@string/toolbar_transition_name"/>

@@ -3,12 +3,19 @@ package bhouse.travellist_starterproject;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Toolbar;
 
 public class MainActivity extends Activity {
     public static final String CLICKED = "Clicked ";
@@ -17,6 +24,7 @@ public class MainActivity extends Activity {
     private TravelListAdapter mAdapter;
     private Menu menu;
     private boolean isListView;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,15 +39,40 @@ public class MainActivity extends Activity {
         TravelListAdapter.OnItemClickListener onItemClickListener = new TravelListAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View v, int position) {
-                Intent intent = new Intent(MainActivity.this, DetailActivity.class);
-                intent.putExtra(DetailActivity.EXTRA_PARAM_ID, position);
-                startActivity(intent);
+                Intent transitionIntent = new Intent(MainActivity.this, DetailActivity.class);
+                transitionIntent.putExtra(DetailActivity.EXTRA_PARAM_ID, position);
+                ActivityOptionsCompat options = createActivityOptions(v);
+                ActivityCompat.startActivity(MainActivity.this, transitionIntent, options.toBundle());
             }
         };
         mAdapter.setOnItemClickListener(onItemClickListener);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setUpActionBar();
+    }
+
+    private ActivityOptionsCompat createActivityOptions(View v) {
+        ImageView placeImage = (ImageView) v.findViewById(R.id.placeImage);
+        LinearLayout placeNameHolder = (LinearLayout) v.findViewById(R.id.placeNameHolder);
+        View navigationBar = findViewById(android.R.id.navigationBarBackground);
+        View statusBar = findViewById(android.R.id.statusBarBackground);
+        Pair<View, String> imagePair = Pair.create((View) placeImage, placeImage.getTransitionName());
+        Pair<View, String> holderPair = Pair.create((View) placeNameHolder, placeNameHolder.getTransitionName());
+        Pair<View, String> navPair = Pair.create(navigationBar, Window.NAVIGATION_BAR_BACKGROUND_TRANSITION_NAME);
+        Pair<View, String> statusPair = Pair.create(statusBar, Window.STATUS_BAR_BACKGROUND_TRANSITION_NAME);
+        Pair<View, String> toolbarPair = Pair.create((View) toolbar, toolbar.getTransitionName());
+        return ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this, imagePair, holderPair, navPair, statusPair,
+                toolbarPair);
     }
 
     private void setUpActionBar() {
+        if (toolbar != null) {
+            setActionBar(toolbar);
+            if (getActionBar() != null) {
+                getActionBar().setDisplayHomeAsUpEnabled(false);
+                getActionBar().setDisplayShowTitleEnabled(true);
+                getActionBar().setElevation(7);
+            }
+        }
     }
 
     @Override
