@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="30dp"
+    android:height="30dp"
+    android:viewportHeight="30"
+    android:viewportWidth="30">
+
+    <group>
+        <path
+            android:name="sm_vertical_line"
+            android:pathData="M2,10.70640746 L9.84484711,23.9"
+            android:strokeColor="@android:color/white"
+            android:strokeWidth="3" />
+        <path
+            android:name="lg_vertical_line"
+            android:pathData="M9.5,22.5 L31,6.5"
+            android:strokeColor="@android:color/white"
+            android:strokeWidth="3" />
+    </group>
+
+</vector>
