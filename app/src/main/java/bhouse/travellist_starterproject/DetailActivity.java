@@ -11,6 +11,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.graphics.Palette;
 import android.transition.Transition;
+import android.view.ActionMode;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.animation.AlphaAnimation;
@@ -24,6 +25,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
 public class DetailActivity extends Activity implements View.OnClickListener {
@@ -58,6 +60,7 @@ public class DetailActivity extends Activity implements View.OnClickListener {
         setContentView(R.layout.activity_detail);
         mPlace = PlaceData.placeList().get(getIntent().getIntExtra(EXTRA_PARAM_ID, 0));
         mList = (ListView) findViewById(R.id.list);
+        mList.setOnItemLongClickListener(new NoteOnItemLongClickListener(new WeakReference<Activity>(this), mActionModeCallback));
         mImageView = (ImageView) findViewById(R.id.placeImage);
         mTitle = (TextView) findViewById(R.id.textView);
         mTitleHolder = (LinearLayout) findViewById(R.id.placeNameHolder);
@@ -97,8 +100,10 @@ public class DetailActivity extends Activity implements View.OnClickListener {
     }
 
     private void addToDo(String todo) {
-        mTodoList.add(todo);
-        mEditTextTodo.setText("");
+        if (!todo.isEmpty()) {
+            mTodoList.add(todo);
+            mEditTextTodo.setText("");
+        }
     }
 
     private void getPhoto() {
@@ -188,4 +193,35 @@ public class DetailActivity extends Activity implements View.OnClickListener {
             }
         });
     }
+
+    private ActionMode.Callback mActionModeCallback = new NoteActionModeCallback() {
+        @Override
+        protected void editNote(final ActionMode mode, final int positionSelected) {
+            new EditNoteDialog(DetailActivity.this) {
+                @Override
+                public void setOnPositiveButton(EditText note) {
+                    mTodoList.set(positionSelected, note.getText().toString());
+                    mToDoAdapter.notifyDataSetChanged();
+                    mode.finish();
+                }
+
+                @Override
+                public void setOnNegativeButtonClicked() {
+                    mode.finish();
+                }
+            }.show();
+        }
+
+        @Override
+        protected void deleteNote(ActionMode mode, int positionSelected) {
+            mTodoList.remove(positionSelected);
+            mToDoAdapter.notifyDataSetChanged();
+            mode.finish();
+        }
+
+        @Override
+        public void onDestroyActionMode(ActionMode mode) {
+            ((NoteOnItemLongClickListener) mList.getOnItemLongClickListener()).setActionMode(null);
+        }
+    };
 }
