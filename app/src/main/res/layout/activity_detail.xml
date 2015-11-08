@@ -33,7 +33,7 @@
                 android:layout_gravity="center"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:inputType="text"
+                android:inputType="textMultiLine"
                 android:textColor="@android:color/white" />
 
         </LinearLayout>

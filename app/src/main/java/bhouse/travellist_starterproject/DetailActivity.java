@@ -50,7 +50,7 @@ public class DetailActivity extends Activity implements View.OnClickListener {
     private InputMethodManager mInputManager;
     private Place mPlace;
     private ArrayList<String> mTodoList;
-    private ArrayAdapter mToDoAdapter;
+    private ArrayAdapter<String> mToDoAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +77,7 @@ public class DetailActivity extends Activity implements View.OnClickListener {
 
     private void setUpAdapter() {
         mTodoList = new ArrayList<>();
-        mToDoAdapter = new ArrayAdapter(this, R.layout.row_todo, mTodoList);
+        mToDoAdapter = new ArrayAdapter<>(this, R.layout.row_todo, mTodoList);
         mList.setAdapter(mToDoAdapter);
     }
 
@@ -98,6 +98,7 @@ public class DetailActivity extends Activity implements View.OnClickListener {
 
     private void addToDo(String todo) {
         mTodoList.add(todo);
+        mEditTextTodo.setText("");
     }
 
     private void getPhoto() {
